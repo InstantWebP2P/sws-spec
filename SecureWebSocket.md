@@ -20,7 +20,59 @@
 
 * 6. Both WebSocket client and server run on secure-context, done.
 
+
 ### All exchanged data format is JSON.
+
+
+### Client/Server exchanged handshake JSON message define
+
+* Handshake start ...
+
+* -> ClientHello message, send from client to server
+
+  Version 1: {
+                  version: 1,          // protocol version
+                      opc: 0,          // message opcode as 0
+          
+        client_public_key: byte array, // client side NACL Box public key
+                    nonce: byte array  // client generated 8 bytes of random number
+  }
+  
+  Version 2: {
+  
+  }
+
+* <- ServerHello message, send from server to client, which responds to ClientHello message
+
+  Version 1: {
+                  version: 1,          // protocol version
+                      opc: 1,          // message opcode as 1
+          
+        server_public_key: byte array, // server side NACL Box public key
+      s_nonce_share_key_a: byte array  // authenticated-encrypted server-sent's (nonce + sharekey) using
+                                       // (server's Box secretkey and (client-sent's Box publickey and nonce))     
+  }
+  
+  Version 2: {
+  
+  }
+
+* -> ClientReady message, send from client to server, which responds to ServerHello message
+
+  Version 1: {
+                  version: 1,          // protocol version
+                      opc: 2,          // message opcode as 2
+          
+      s_nonce_share_key_a: byte array  // authenticated-encrypted client-sent's (nonce + sharekey) using
+                                       // (client's Box secretkey and (server-sent's Box publickey and nonce))    
+  }
+  
+  Version 2: {
+  
+  }
+  
+* Handshake done.  
+
 
 ### Copyright tom zhou<iwebpp@gmail.com>
 
