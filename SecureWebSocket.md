@@ -39,7 +39,11 @@
   }
   
   Version 2: {
-  
+                  version: 2,          // protocol version, will request server's public key NACL cert
+                      opc: 0,          // message opcode as 0
+          
+        client_public_key: byte array, // client side NACL Box public key
+                    nonce: byte array  // client generated 8 bytes of random number  
   }
 
 * <- ServerHello message, send from server to client, which responds to ClientHello message
@@ -54,7 +58,15 @@
   }
   
   Version 2: {
-  
+                  version: 2,          // protocol version
+                      opc: 1,          // message opcode as 1
+          
+        server_public_key: byte array, // server side NACL Box public key
+      s_nonce_share_key_a: byte array, // authenticated-encrypted server-sent's (nonce(8bytes) + sharekey) using
+                                       // (server's Box secretkey and (client-sent's Box publickey and nonce(8bytes)))     
+    
+                     cert: NACL cert,  // server's public key NACL cert signed by CA
+              requestCert: true,false  // require or not client's cert, optional, default as false
   }
 
 * -> ClientReady message, send from client to server, which responds to ServerHello message
@@ -68,10 +80,19 @@
   }
   
   Version 2: {
-  
+                  version: 2,          // protocol version
+                      opc: 2,          // message opcode as 2
+          
+      s_nonce_share_key_a: byte array  // authenticated-encrypted client-sent's (nonce(8bytes) + sharekey) using
+                                       // (client's Box secretkey and (server-sent's Box publickey and nonce(8bytes)))    
+ 
+                     cert: NACL cert   // client's public key NACL cert signed by CA, in case server request client's cert
   }
   
 * Handshake done.  
+
+
+### for NACL Cert System define, refer to https://github.com/InstantWebP2P/nacl-cert
 
 
 ### Copyright tom zhou<iwebpp@gmail.com>
