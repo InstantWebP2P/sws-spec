@@ -53,7 +53,7 @@
                       opc: 1,          // message opcode as 1
           
         server_public_key: byte array, // server side NACL Box public key
-      s_nonce_share_key_a: byte array  // authenticated-encrypted server-sent's (nonce(8bytes) + sharekey) using
+             s_blackbox_a: byte array  // authenticated-encrypted server-sent's ( nonce(8bytes) + sharekey ) using
                                        // (server's Box secretkey and (client-sent's Box publickey and nonce(8bytes)))     
   }
   
@@ -62,11 +62,9 @@
                       opc: 1,          // message opcode as 1
           
         server_public_key: byte array, // server side NACL Box public key
-      s_nonce_share_key_a: byte array, // authenticated-encrypted server-sent's (nonce(8bytes) + sharekey) using
-                                       // (server's Box secretkey and (client-sent's Box publickey and nonce(8bytes)))     
-    
-                     cert: NACL cert,  // server's public key NACL cert signed by CA
-              requestCert: true,false  // require or not client's cert, optional, default as false
+             s_blackbox_a: byte array  // authenticated-encrypted server-sent's ( nonce(8bytes) + sharekey + 
+                                       // {cert,requireCert}(utf8 encoded json string) ) using
+                                       // (server's Box secretkey and (client-sent's Box publickey and nonce(8bytes)))
   }
 
 * -> ClientReady message, send from client to server, which responds to ServerHello message
@@ -75,7 +73,7 @@
                   version: 1,          // protocol version
                       opc: 2,          // message opcode as 2
           
-      s_nonce_share_key_a: byte array  // authenticated-encrypted client-sent's (nonce(8bytes) + sharekey) using
+             s_blackbox_a: byte array  // authenticated-encrypted client-sent's ( nonce(8bytes) + sharekey ) using
                                        // (client's Box secretkey and (server-sent's Box publickey and nonce(8bytes)))    
   }
   
@@ -83,10 +81,9 @@
                   version: 2,          // protocol version
                       opc: 2,          // message opcode as 2
           
-      s_nonce_share_key_a: byte array  // authenticated-encrypted client-sent's (nonce(8bytes) + sharekey) using
-                                       // (client's Box secretkey and (server-sent's Box publickey and nonce(8bytes)))    
- 
-                     cert: NACL cert   // client's public key NACL cert signed by CA, in case server request client's cert
+             s_blackbox_a: byte array  // authenticated-encrypted client-sent's ( nonce(8bytes) + sharekey + 
+                                       // cert(utf8 encoded json string) ) using
+                                       // (client's Box secretkey and (server-sent's Box publickey and nonce(8bytes))) 
   }
   
 * Handshake done.  
