@@ -1,4 +1,4 @@
-Secure WebSocket(alias SWS) intends to setup Nacl public key exchange over plain WebSocket.
+Secure WebSocket(alias SWS) - Nacl public key exchange over WebSocket.
 -------------------------------------------------------------------------------------------
 
 ### SWS' handshake process consists of six steps
