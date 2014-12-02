@@ -20,7 +20,8 @@ Secure WebSocket(alias SWS) - Nacl public key exchange over WebSocket.
 ### Client/Server exchanged handshake JSON message define
 
 * Handshake start ...
-* -> ClientHello message, send from client to server    
+* -> ClientHello message, send from client to server
+```js
   Version 1: {  
                   version: 1,          // protocol version  
                       opc: 0,          // message opcode as 0    
@@ -32,8 +33,10 @@ Secure WebSocket(alias SWS) - Nacl public key exchange over WebSocket.
                       opc: 0,          // message opcode as 0    
         client_public_key: byte array, // client side NACL Box public key  
                     nonce: byte array  // client generated 8 bytes of random number  
-  }  
-* <- ServerHello message, send from server to client, which responds to ClientHello message    
+  }
+  ```
+* <- ServerHello message, send from server to client, which responds to ClientHello message
+```js
   Version 1: {  
                   version: 1,          // protocol version  
                       opc: 1,          // message opcode as 1    
@@ -48,8 +51,10 @@ Secure WebSocket(alias SWS) - Nacl public key exchange over WebSocket.
              s_blackbox_a: byte array  // authenticated-encrypted server-sent's ( nonce(8bytes) + sharekey +  
                                        // {cert,requireCert}(utf8 encoded json string) ) using  
                                        // (server's Box secretkey and (client-sent's Box publickey and nonce(8bytes)))  
-  }  
-* -> ClientReady message, send from client to server, which responds to ServerHello message    
+  }
+  ```
+* -> ClientReady message, send from client to server, which responds to ServerHello message
+```js
   Version 1: {  
                   version: 1,          // protocol version  
                       opc: 2,          // message opcode as 2    
@@ -62,7 +67,8 @@ Secure WebSocket(alias SWS) - Nacl public key exchange over WebSocket.
              s_blackbox_a: byte array  // authenticated-encrypted client-sent's ( nonce(8bytes) + sharekey +  
                                        // cert(utf8 encoded json string) ) using  
                                        // (client's Box secretkey and (server-sent's Box publickey and nonce(8bytes)))  
-  }    
+  }
+  ```
 * Handshake done.  
 
 ### for NACL Cert System define, refer to https://github.com/InstantWebP2P/nacl-cert
