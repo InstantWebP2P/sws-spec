@@ -5,13 +5,17 @@ Secure WebSocket(alias SWS) - Nacl public key exchange over WebSocket.
 
 1. WebSocket client connect to WebSocketServer,
 2. WebSocket client send ClientHello message to WebSocketServer with their public key/certification information and a Random number,
-3. WebSocket server verify ClientHello message and decide to continue or reject handshake request,  
+3. WebSocket server verify ClientHello message and decide to continue or reject handshake request,
+```
    a. If WebSocket server grant client's handshake request, then send it's public key/certification information,  
       another encrypted Random number and Share-Key as ServerHello message back  
    b. If WebSocket server reject client's handshake request, then [send invalid certification as ServerHello message back and] close WebSocket client,
-4. WebSocket client got Server's ServerHello message, then verify Server's certification and decide to continue or reject handshake process,  
+```
+4. WebSocket client got Server's ServerHello message, then verify Server's certification and decide to continue or reject handshake process,
+```
    a. If WebSocket client grant server's handshake request, then send encrypted Share-Key as ClientReady message to Server, then switch to secure-context,  
    b. If WebSocket client reject server's handshake request, then close WebSocket client,
+```
 5. WebSocket server got Client's ClientReady message, extract their Share-Key, then switch to secure-context,
 6. Both WebSocket client and server run on secure-context, done.
 
