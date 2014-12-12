@@ -4,21 +4,23 @@ Secure WebSocket(alias SWS) - Nacl public key exchange over WebSocket.
 ### SWS' handshake process consists of six steps
 
 1. WebSocket client connect to WebSocketServer,
-2. WebSocket client send ClientHello message to WebSocketServer with their public key/certification information and a Random number,
-3. WebSocket server verify ClientHello message and decide to continue or reject handshake request,
 
-   a. If WebSocket server grant client's handshake request, then send it's public key/certification information,  
-      another encrypted Random number and Share-Key as ServerHello message back
-      
-   b. If WebSocket server reject client's handshake request, then [send invalid certification as ServerHello message back and] close WebSocket client,
+2. WebSocket client send ClientHello message to WebSocketServer,
 
-4. WebSocket client got Server's ServerHello message, then verify Server's certification and decide to continue or reject handshake process,
+3. WebSocket server got ClientHello message and send ServerHello message back,
 
-   a. If WebSocket client grant server's handshake request, then send encrypted Share-Key as ClientReady message to Server, then switch to secure-context,  
+4. WebSocket client got Server's ServerHello message, then verify ServerHello message, then decide to continue or reject handshake process,
+
+   a. If WebSocket client grant server's handshake request, then send ClientReady message to Server, then switch to secure-context,  
    
    b. If WebSocket client reject server's handshake request, then close WebSocket client,
 
-5. WebSocket server got Client's ClientReady message, extract their Share-Key, then switch to secure-context,
+5. WebSocket server got Client's ClientReady message, then verify ClientReady message, then decide to continue or reject handshake process,
+
+   a. If WebSocket server grant client's handshake request, then switch to secure-context,  
+   
+   b. If WebSocket server reject client's handshake request, then close WebSocket client,
+
 6. Both WebSocket client and server run on secure-context, done.
 
 ### All exchanged data format is JSON
