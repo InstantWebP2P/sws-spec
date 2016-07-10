@@ -20,9 +20,114 @@
 
     <section class="main-content">
       <h1>
-<a id="sws-spec" class="anchor" href="#sws-spec" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>sws-spec</h1>
+<a id="sws-spec---secure-websocketalias-sws-spec" class="anchor" href="#sws-spec---secure-websocketalias-sws-spec" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>sws-spec - Secure WebSocket(alias SWS) Spec</h1>
 
-<p>SWS - SecureWebSocket Spec</p>
+<h2>
+<a id="sws---nacl-public-key-exchange-over-websocket" class="anchor" href="#sws---nacl-public-key-exchange-over-websocket" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SWS - Nacl public key exchange over WebSocket.</h2>
+
+<hr>
+
+<h3>
+<a id="sws-handshake-process-consists-of-six-steps" class="anchor" href="#sws-handshake-process-consists-of-six-steps" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SWS' handshake process consists of six steps</h3>
+
+<ol>
+<li><p>WebSocket client connect to WebSocketServer,</p></li>
+<li><p>WebSocket client send ClientHello message to WebSocketServer,</p></li>
+<li><p>WebSocket server got ClientHello message and send ServerHello message back,</p></li>
+<li>
+<p>WebSocket client got Server's ServerHello message, then verify ServerHello message, then decide to continue or reject handshake process,</p>
+
+<p>a. If WebSocket client grant server's handshake request, then send ClientReady message to Server, then switch to secure-context,  </p>
+
+<p>b. If WebSocket client reject server's handshake request, then close WebSocket client,</p>
+</li>
+<li>
+<p>WebSocket server got Client's ClientReady message, then verify ClientReady message, then decide to continue or reject handshake process,</p>
+
+<p>a. If WebSocket server grant client's handshake request, then switch to secure-context,  </p>
+
+<p>b. If WebSocket server reject client's handshake request, then close WebSocket client,</p>
+</li>
+<li><p>Both WebSocket client and server run on secure-context, done.</p></li>
+</ol>
+
+<h3>
+<a id="all-exchanged-data-format-is-json" class="anchor" href="#all-exchanged-data-format-is-json" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>All exchanged data format is JSON</h3>
+
+<h3>
+<a id="clientserver-exchanged-handshake-json-message-define" class="anchor" href="#clientserver-exchanged-handshake-json-message-define" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Client/Server exchanged handshake JSON message define</h3>
+
+<ul>
+<li>Handshake start ...</li>
+<li>-&gt; ClientHello message, send from client to server</li>
+</ul>
+
+<div class="highlight highlight-source-js"><pre>  Version <span class="pl-c1">1</span><span class="pl-k">:</span> {  
+                  version<span class="pl-k">:</span> <span class="pl-c1">1</span>,          <span class="pl-c">// protocol version  </span>
+                      opc<span class="pl-k">:</span> <span class="pl-c1">0</span>,          <span class="pl-c">// message opcode as 0    </span>
+        client_public_key<span class="pl-k">:</span> byte array, <span class="pl-c">// client side NACL Box public key  </span>
+                    nonce<span class="pl-k">:</span> byte array  <span class="pl-c">// client generated 8 bytes of random number  </span>
+  }    
+  Version <span class="pl-c1">2</span><span class="pl-k">:</span> {  
+                  version<span class="pl-k">:</span> <span class="pl-c1">2</span>,          <span class="pl-c">// protocol version, will request server's public key NACL cert  </span>
+                      opc<span class="pl-k">:</span> <span class="pl-c1">0</span>,          <span class="pl-c">// message opcode as 0    </span>
+        client_public_key<span class="pl-k">:</span> byte array, <span class="pl-c">// client side NACL Box public key  </span>
+                    nonce<span class="pl-k">:</span> byte array  <span class="pl-c">// client generated 8 bytes of random number  </span>
+  }</pre></div>
+
+<ul>
+<li>&lt;- ServerHello message, send from server to client, which responds to ClientHello message</li>
+</ul>
+
+<div class="highlight highlight-source-js"><pre>  Version <span class="pl-c1">1</span><span class="pl-k">:</span> {  
+                  version<span class="pl-k">:</span> <span class="pl-c1">1</span>,          <span class="pl-c">// protocol version  </span>
+                      opc<span class="pl-k">:</span> <span class="pl-c1">1</span>,          <span class="pl-c">// message opcode as 1    </span>
+        server_public_key<span class="pl-k">:</span> byte array, <span class="pl-c">// server side NACL Box public key  </span>
+             s_blackbox_a<span class="pl-k">:</span> byte array  <span class="pl-c">// authenticated-encrypted server-sent's ( nonce(8bytes) + sharekey ) using  </span>
+                                       <span class="pl-c">// (server's Box secretkey and (client-sent's Box publickey and nonce(8bytes)))  </span>
+  }    
+  Version <span class="pl-c1">2</span><span class="pl-k">:</span> {  
+                  version<span class="pl-k">:</span> <span class="pl-c1">2</span>,          <span class="pl-c">// protocol version  </span>
+                      opc<span class="pl-k">:</span> <span class="pl-c1">1</span>,          <span class="pl-c">// message opcode as 1    </span>
+        server_public_key<span class="pl-k">:</span> byte array, <span class="pl-c">// server side NACL Box public key  </span>
+             s_blackbox_a<span class="pl-k">:</span> byte array  <span class="pl-c">// authenticated-encrypted server-sent's ( nonce(8bytes) + sharekey +  </span>
+                                       <span class="pl-c">// {cert,requireCert}(utf8 encoded json string) ) using  </span>
+                                       <span class="pl-c">// (server's Box secretkey and (client-sent's Box publickey and nonce(8bytes)))  </span>
+  }</pre></div>
+
+<ul>
+<li>-&gt; ClientReady message, send from client to server, which responds to ServerHello message</li>
+</ul>
+
+<div class="highlight highlight-source-js"><pre>  Version <span class="pl-c1">1</span><span class="pl-k">:</span> {  
+                  version<span class="pl-k">:</span> <span class="pl-c1">1</span>,          <span class="pl-c">// protocol version  </span>
+                      opc<span class="pl-k">:</span> <span class="pl-c1">2</span>,          <span class="pl-c">// message opcode as 2    </span>
+             s_blackbox_a<span class="pl-k">:</span> byte array  <span class="pl-c">// authenticated-encrypted client-sent's ( nonce(8bytes) + sharekey ) using  </span>
+                                       <span class="pl-c">// (client's Box secretkey and (server-sent's Box publickey and nonce(8bytes)))  </span>
+  }    
+  Version <span class="pl-c1">2</span><span class="pl-k">:</span> {  
+                  version<span class="pl-k">:</span> <span class="pl-c1">2</span>,          <span class="pl-c">// protocol version  </span>
+                      opc<span class="pl-k">:</span> <span class="pl-c1">2</span>,          <span class="pl-c">// message opcode as 2    </span>
+             s_blackbox_a<span class="pl-k">:</span> byte array  <span class="pl-c">// authenticated-encrypted client-sent's ( nonce(8bytes) + sharekey +  </span>
+                                       <span class="pl-c">// cert(utf8 encoded json string) ) using  </span>
+                                       <span class="pl-c">// (client's Box secretkey and (server-sent's Box publickey and nonce(8bytes)))  </span>
+  }</pre></div>
+
+<ul>
+<li>Handshake done.<br>
+</li>
+</ul>
+
+<h3>
+<a id="for-nacl-cert-system-define-refer-to-httpsgithubcominstantwebp2pnacl-cert" class="anchor" href="#for-nacl-cert-system-define-refer-to-httpsgithubcominstantwebp2pnacl-cert" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>for NACL Cert System define, refer to <a href="https://github.com/InstantWebP2P/nacl-cert">https://github.com/InstantWebP2P/nacl-cert</a>
+</h3>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>(The MIT License)</p>
+
+<p>Copyright (c) 2014-2016 Tom Zhou(<a href="mailto:iwebpp@gmail.com">iwebpp@gmail.com</a>)</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/InstantWebP2P/sws-spec">Sws-spec</a> is maintained by <a href="https://github.com/InstantWebP2P">InstantWebP2P</a>.</span>
