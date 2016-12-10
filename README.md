@@ -1,5 +1,5 @@
-sws-spec - Secure WebSocket(alias SWS) Spec
-========
+sws-spec - Secure WebSocket(alias SWS) Specification Design
+===========================================================
 
 ## SWS - Nacl public key exchange over WebSocket.
 -------------------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ sws-spec - Secure WebSocket(alias SWS) Spec
 
 
 ## License
-(The MIT License)
+(Private property)
 
 Copyright (c) 2014-2016 Tom Zhou(iwebpp@gmail.com)
 
