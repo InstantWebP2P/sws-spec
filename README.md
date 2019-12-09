@@ -1,4 +1,4 @@
-sws-spec - Secure WebSocket(alias SWS) Specification Design
+sws-spec - SecureWebSocket(SWS) Specification Design
 ===========================================================
 
 ## SWS - Nacl public key exchange over WebSocket.
