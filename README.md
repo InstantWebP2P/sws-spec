@@ -84,6 +84,10 @@ sws-spec - SecureWebSocket(SWS) Specification Design
 
 ### for NACL Cert System define, refer to https://github.com/InstantWebP2P/nacl-cert
 
+### Reference implementations
+
+* JS/NodeJS    - https://github.com/InstantWebP2P/sws
+* Java/Android - https://github.com/InstantWebP2P/node-android/blob/master/app/src/main/java/com/iwebpp/wspp/SecureWebSocket.java
 
 ## License
 (Private property)
