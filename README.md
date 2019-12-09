@@ -86,8 +86,8 @@ sws-spec - SecureWebSocket(SWS) Specification Design
 
 ### Reference implementations
 
-* JS/NodeJS    - https://github.com/InstantWebP2P/sws
-* Java/Android - https://github.com/InstantWebP2P/node-android/blob/master/app/src/main/java/com/iwebpp/wspp/SecureWebSocket.java
+* [JS/NodeJS implementation](https://github.com/InstantWebP2P/sws)
+* [Java/Android implementation](https://github.com/InstantWebP2P/node-android/blob/master/app/src/main/java/com/iwebpp/wspp/SecureWebSocket.java)
 
 ## License
 (Private property)
