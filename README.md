@@ -82,7 +82,7 @@ sws-spec - SecureWebSocket(SWS) Specification Design
   ```
 * Handshake done.  
 
-### for NACL Cert System define, refer to https://github.com/InstantWebP2P/nacl-cert
+### [NACL Cert System Spec](https://github.com/InstantWebP2P/nacl-cert)
 
 ### Reference implementations
 
