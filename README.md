@@ -92,5 +92,5 @@ sws-spec - SecureWebSocket(SWS) Specification Design
 ## License
 (Private property)
 
-Copyright (c) 2014-2016 Tom Zhou(iwebpp@gmail.com)
+Copyright (c) 2014-present Tom Zhou(iwebpp@gmail.com)
 
