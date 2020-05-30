@@ -90,7 +90,7 @@ sws-spec - SecureWebSocket(SWS) Specification Design
 * [Java/Android implementation](https://github.com/InstantWebP2P/node-android/blob/master/app/src/main/java/com/iwebpp/wspp/SecureWebSocket.java)
 
 ## License
-(Private property)
+(MIT)
 
 Copyright (c) 2014-present Tom Zhou(iwebpp@gmail.com)
 
