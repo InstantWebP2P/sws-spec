@@ -1,8 +1,4 @@
-sws-spec - SecureWebSocket(SWS) Specification Design
-===========================================================
-
-## SWS - Nacl public key exchange over WebSocket.
--------------------------------------------------------------------------------------------
+## SecureWebSocket(SWS) - Nacl public key exchange over WebSocket
 
 ### SWS' handshake process consists of six steps
 
