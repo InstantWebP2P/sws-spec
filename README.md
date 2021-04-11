@@ -1,7 +1,7 @@
 ## SecureWebSocket(SWS) - Nacl public key exchange over WebSocket
 
 ### SWS' handshake process consists of six steps
-
+```js
 1. WebSocket client connect to WebSocketServer,
 
 2. WebSocket client send ClientHello message to WebSocketServer,
@@ -21,6 +21,7 @@
    b. If WebSocket server reject client's handshake request, then close WebSocket client,
 
 6. Both WebSocket client and server run on secure-context, done.
+```
 
 ### All exchanged data format is JSON
 
